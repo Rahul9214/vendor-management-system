@@ -10,6 +10,7 @@ const VendorDetailPage= lazy(() => import('@/pages/VendorDetail'));
 const OnboardingPage  = lazy(() => import('@/pages/Onboarding'));
 const PerformancePage = lazy(() => import('@/pages/Performance'));
 const ApprovalWorkflowPage = lazy(() => import('@/pages/ApprovalWorkflow'));
+const NotificationsPage = lazy(() => import('@/pages/Notifications'));
 const ComingSoonPage  = lazy(() => import('@/pages/ComingSoon'));
 
 // ─── App ──────────────────────────────────────────────────────────────────────
@@ -82,7 +83,17 @@ export default function App() {
             }
           />
 
-          {/* Modules 7–8 – Coming soon placeholder */}
+          {/* Module 7 – Notifications & Alert Center */}
+          <Route
+            path="/notifications"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <NotificationsPage />
+              </Suspense>
+            }
+          />
+
+          {/* Module 8 – Coming soon placeholder */}
           <Route
             path="*"
             element={
