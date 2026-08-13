@@ -60,6 +60,12 @@ export type {
 } from './order';
 
 export type {
+  KanbanStage,
+  KanbanColumn,
+  KanbanVendorCard,
+} from './kanban';
+
+export type {
   ApiResponse,
   ApiError,
   PaginatedResponse,
