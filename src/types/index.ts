@@ -24,6 +24,14 @@ export type {
 } from './vendorDetail';
 
 export type {
+  VendorPerformanceScorecard,
+  VendorPerformanceTrendPoint,
+  PerformanceIssue,
+  PaymentFulfillmentHistory,
+  PerformanceFilterParams,
+} from './performance';
+
+export type {
   ApiResponse,
   ApiError,
   PaginatedResponse,
