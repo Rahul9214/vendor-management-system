@@ -1,11 +1,12 @@
 import { memo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Bell, Moon, Sun, Search, Menu } from 'lucide-react';
+import { Moon, Sun, Search, Menu } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import { NAV_ITEMS } from '@/constants/navigation';
 import { dashboardKeys } from '@/hooks/useDashboard';
 import { useTheme, useToggleTheme, useToggleSidebar } from '@/hooks/useUIStore';
+import { HeaderNotificationDropdown } from '@/components/notification/HeaderNotificationDropdown';
 
 // ─── Page title resolver ──────────────────────────────────────────────────────
 
@@ -88,17 +89,8 @@ export const Header = memo(function Header() {
           </svg>
         </button>
 
-        {/* Notification bell */}
-        <button
-          type="button"
-          title="Notifications"
-          className="relative rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-        >
-          <Bell className="h-4 w-4" />
-          <span className="absolute right-1.5 top-1.5 flex h-2 w-2 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
-            <span className="sr-only">3 notifications</span>
-          </span>
-        </button>
+        {/* Interactive Header Notification Dropdown */}
+        <HeaderNotificationDropdown />
 
         {/* Theme toggle */}
         <button
