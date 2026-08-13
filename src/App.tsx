@@ -5,6 +5,7 @@ import { LoadingScreen } from '@/components/shared/Skeleton';
 
 // ─── Lazy-loaded pages (code splitting per route) ─────────────────────────────
 const DashboardPage  = lazy(() => import('@/pages/Dashboard'));
+const VendorsPage    = lazy(() => import('@/pages/Vendors'));
 const ComingSoonPage = lazy(() => import('@/pages/ComingSoon'));
 
 // ─── App ──────────────────────────────────────────────────────────────────────
@@ -27,7 +28,17 @@ export default function App() {
             }
           />
 
-          {/* Modules 2–8 – Coming soon placeholder */}
+          {/* Module 2 – Vendor Directory */}
+          <Route
+            path="/vendors"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <VendorsPage />
+              </Suspense>
+            }
+          />
+
+          {/* Modules 3–8 – Coming soon placeholder */}
           <Route
             path="*"
             element={
