@@ -8,7 +8,7 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![TanStack Query](https://img.shields.io/badge/TanStack_Query-v5-FF4154?style=for-the-badge&logo=reactquery&logoColor=white)](https://tanstack.com/query)
 
-An enterprise-grade, scalable, and responsive **Vendor Management System (VMS)** web application built with **React 18**, **TypeScript**, **Vite**, **TailwindCSS**, **TanStack Query**, and **Zustand**. Designed with modern product engineering practices, rich dark mode grid aesthetic, fluid responsiveness, zero layout shifts, and full accessibility compliance.
+An enterprise-grade, scalable, and responsive **Vendor Management System (VMS)** web application built with **React 19**, **TypeScript**, **Vite**, **TailwindCSS**, **TanStack Query**, and **Zustand**. Designed with modern product engineering practices, rich dark mode grid aesthetic, fluid responsiveness, zero layout shifts, and full accessibility compliance.
 
 ---
 
