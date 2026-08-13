@@ -14,33 +14,69 @@ export type VendorCategory =
 
 export interface Vendor {
   id: string;
+  code: string;
   name: string;
+  logoUrl?: string;
   category: VendorCategory;
   status: VendorStatus;
   /** Overall rating, 0–5 */
   rating: number;
+  contactPerson: string;
   contactEmail: string;
   contactPhone: string;
   country: string;
   city: string;
+  address?: string;
+  taxId?: string;
+  website?: string;
+  paymentTerms?: string;
   /** ISO date string */
   joinedAt: string;
   /** ISO date string */
   lastActivity: string;
+  /** ISO date string of last transaction */
+  lastTransactionDate: string;
+  /** Last transaction purchase amount in USD */
+  lastTransactionAmount: number;
   totalOrders: number;
-  /** Total contract value in USD */
+  /** Total purchase value in USD */
   totalValue: number;
   /** Compliance score, 0–100 */
   complianceScore: number;
+  notes?: string;
+}
+
+// ─── Filtering & Query Types ──────────────────────────────────────────────────
+
+export interface VendorFilterParams {
+  search?: string;
+  categories?: VendorCategory[];
+  statuses?: VendorStatus[];
+  minRating?: number;
+  maxRating?: number;
+  minPurchaseValue?: number;
+  maxPurchaseValue?: number;
+  cities?: string[];
+  page?: number;
+  pageSize?: number;
+  sortBy?: keyof Vendor;
+  sortOrder?: 'asc' | 'desc';
+}
+
+export interface SavedView {
+  id: string;
+  name: string;
+  description?: string;
+  isPreset?: boolean;
+  filters: Omit<VendorFilterParams, 'page' | 'pageSize'>;
+  columnVisibility?: Record<string, boolean>;
 }
 
 // ─── Dashboard KPI Types ──────────────────────────────────────────────────────
 
 export interface KPITrends {
-  /** % change from previous period */
   totalVendors: number;
   activeVendors: number;
-  /** Negative = fewer blacklisted (improvement) */
   blacklistedVendors: number;
   pendingApprovals: number;
   averageRating: number;
@@ -52,7 +88,6 @@ export interface KPIData {
   activeVendors: number;
   blacklistedVendors: number;
   pendingApprovals: number;
-  /** Average rating, 0–5 */
   averageRating: number;
   activePurchaseOrders: number;
   trends: KPITrends;
@@ -62,39 +97,29 @@ export interface KPIData {
 
 export interface PerformanceTrendPoint {
   month: string;
-  /** Actual vendor performance score (0–100) */
   score: number;
-  /** Target score for the month */
   target: number;
-  /** Same month, previous year */
   previousYear: number;
 }
 
 export interface CategoryData {
   category: string;
   count: number;
-  /** Percentage of total vendors */
   percentage: number;
-  /** Hex color for chart rendering */
   color: string;
 }
 
 export interface MonthlyPurchaseData {
   month: string;
-  /** Actual spend in USD thousands */
   value: number;
-  /** Budgeted spend in USD thousands */
   budget: number;
-  /** Number of purchase orders */
   orders: number;
 }
 
 export interface RatingData {
-  /** Display label, e.g. "5 Stars" */
   label: string;
   stars: number;
   count: number;
   percentage: number;
-  /** Hex color for bar */
   color: string;
 }
