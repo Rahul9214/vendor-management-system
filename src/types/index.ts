@@ -2,6 +2,8 @@ export type {
   Vendor,
   VendorStatus,
   VendorCategory,
+  VendorFilterParams,
+  SavedView,
   KPIData,
   KPITrends,
   PerformanceTrendPoint,
