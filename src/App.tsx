@@ -13,6 +13,7 @@ const ApprovalWorkflowPage = lazy(() => import('@/pages/ApprovalWorkflow'));
 const NotificationsPage    = lazy(() => import('@/pages/Notifications'));
 const ContractsPage        = lazy(() => import('@/pages/Contracts'));
 const OrdersPage           = lazy(() => import('@/pages/Orders'));
+const KanbanPage           = lazy(() => import('@/pages/Kanban'));
 const SettingsPage         = lazy(() => import('@/pages/Settings'));
 const ComingSoonPage       = lazy(() => import('@/pages/ComingSoon'));
 
@@ -42,6 +43,16 @@ export default function App() {
             element={
               <Suspense fallback={<LoadingScreen />}>
                 <VendorsPage />
+              </Suspense>
+            }
+          />
+
+          {/* Bonus Challenge – Onboarding Drag-and-Drop Kanban Pipeline */}
+          <Route
+            path="/kanban"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <KanbanPage />
               </Suspense>
             }
           />
