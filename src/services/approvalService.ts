@@ -8,7 +8,7 @@ import { MOCK_APPROVAL_REQUESTS } from '@/constants/mockApprovals';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-let approvalStore: ApprovalRequest[] = [...MOCK_APPROVAL_REQUESTS];
+const approvalStore: ApprovalRequest[] = [...MOCK_APPROVAL_REQUESTS];
 
 export const approvalService = {
   /**
@@ -58,7 +58,7 @@ export const approvalService = {
     await delay(500);
 
     const { requestId, action, comment } = payload;
-    let targetIndex = approvalStore.findIndex((r) => r.id === requestId);
+    const targetIndex = approvalStore.findIndex((r) => r.id === requestId);
 
     if (targetIndex === -1) {
       throw new Error(`Request ${requestId} not found.`);

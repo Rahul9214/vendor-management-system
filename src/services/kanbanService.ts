@@ -3,7 +3,7 @@ import { MOCK_KANBAN_CARDS } from '@/constants/mockKanban';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-let kanbanStore: KanbanVendorCard[] = [...MOCK_KANBAN_CARDS];
+const kanbanStore: KanbanVendorCard[] = [...MOCK_KANBAN_CARDS];
 
 export const kanbanService = {
   async getKanbanCards(): Promise<ApiResponse<KanbanVendorCard[]>> {

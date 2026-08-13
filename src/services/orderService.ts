@@ -3,7 +3,7 @@ import { MOCK_ORDERS } from '@/constants/mockOrders';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-let ordersStore: PurchaseOrder[] = [...MOCK_ORDERS];
+const ordersStore: PurchaseOrder[] = [...MOCK_ORDERS];
 
 export const orderService = {
   async getOrders(params: POFilterParams = {}): Promise<ApiResponse<PurchaseOrder[]>> {

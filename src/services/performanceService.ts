@@ -40,9 +40,7 @@ export const performanceService = {
   /**
    * Fetches performance trend points over time.
    */
-  async getPerformanceTrends(
-    _params: PerformanceFilterParams = {},
-  ): Promise<ApiResponse<VendorPerformanceTrendPoint[]>> {
+  async getPerformanceTrends(): Promise<ApiResponse<VendorPerformanceTrendPoint[]>> {
     await delay(400);
     return {
       data: MOCK_PERFORMANCE_TRENDS,
@@ -55,9 +53,7 @@ export const performanceService = {
   /**
    * Fetches recent performance issues and SLA breaches.
    */
-  async getRecentIssues(
-    _params: PerformanceFilterParams = {},
-  ): Promise<ApiResponse<PerformanceIssue[]>> {
+  async getRecentIssues(): Promise<ApiResponse<PerformanceIssue[]>> {
     await delay(250);
     return {
       data: MOCK_RECENT_PERFORMANCE_ISSUES,

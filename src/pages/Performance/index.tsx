@@ -21,8 +21,8 @@ export default function PerformancePage() {
   });
 
   const { data: scorecard, isLoading: isScorecardLoading, isError: isScorecardError } = usePerformanceScorecard(filters);
-  const { data: trends, isLoading: isTrendsLoading } = usePerformanceTrends(filters);
-  const { data: issues, isLoading: isIssuesLoading } = useRecentIssues(filters);
+  const { data: trends, isLoading: isTrendsLoading } = usePerformanceTrends();
+  const { data: issues, isLoading: isIssuesLoading } = useRecentIssues();
   const { data: paymentFulfillment } = usePaymentFulfillment();
 
   if (isScorecardLoading || isTrendsLoading || isIssuesLoading) {

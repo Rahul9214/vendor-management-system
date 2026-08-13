@@ -11,7 +11,7 @@ export const vendorDetailKeys = {
 export function useVendorFullDetail(vendorId: string) {
   return useQuery({
     queryKey: vendorDetailKeys.detail(vendorId),
-    queryFn: () => vendorDetailService.getFullVendorDetail(vendorId),
+    queryFn: () => vendorDetailService.getFullVendorDetail(),
     enabled: Boolean(vendorId),
     staleTime: 5 * 60 * 1000,
     select: (res) => res.data,

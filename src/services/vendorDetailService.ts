@@ -21,7 +21,7 @@ export const vendorDetailService = {
   /**
    * Fetches full tabbed details for a given vendor ID.
    */
-  async getFullVendorDetail(_vendorId: string): Promise<ApiResponse<FullVendorDetail>> {
+  async getFullVendorDetail(): Promise<ApiResponse<FullVendorDetail>> {
     await delay(300);
     return {
       data: {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Bookmark, Plus, X, Sparkles } from 'lucide-react';
 import type { SavedView, VendorFilterParams } from '@/types';
 import { cn } from '@/lib/utils';
@@ -50,21 +50,16 @@ export function SavedViewsBar({
   activeViewId,
   onSelectView,
 }: SavedViewsBarProps) {
-  const [customViews, setCustomViews] = useState<SavedView[]>([]);
-  const [isSaving, setIsSaving] = useState(false);
-  const [newViewName, setNewViewName] = useState('');
-
-  // Load custom saved views from localStorage
-  useEffect(() => {
+  const [customViews, setCustomViews] = useState<SavedView[]>(() => {
     try {
       const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (stored) {
-        setCustomViews(JSON.parse(stored));
-      }
+      return stored ? JSON.parse(stored) : [];
     } catch {
-      // Ignore parse errors
+      return [];
     }
-  }, []);
+  });
+  const [isSaving, setIsSaving] = useState(false);
+  const [newViewName, setNewViewName] = useState('');
 
   // Save views to localStorage
   const saveCustomViews = (views: SavedView[]) => {

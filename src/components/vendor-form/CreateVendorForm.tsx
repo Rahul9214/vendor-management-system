@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   CheckCircle2,
@@ -46,7 +46,9 @@ export function CreateVendorForm() {
   const [activeStep, setActiveStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [draftSavedAt, setDraftSavedAt] = useState<string | null>(null);
+  const [draftSavedAt, setDraftSavedAt] = useState<string | null>(() =>
+    localStorage.getItem(DRAFT_STORAGE_KEY) ? new Date().toLocaleTimeString() : null,
+  );
 
   const navigate = useNavigate();
 
@@ -54,7 +56,8 @@ export function CreateVendorForm() {
     register,
     handleSubmit,
     setValue,
-    watch,
+    control,
+    getValues,
     trigger,
     reset,
     formState: { errors },
@@ -77,8 +80,8 @@ export function CreateVendorForm() {
     },
   });
 
-  const selectedCertifications = watch('certifications') || [];
-  const uploadedDocs = watch('uploadedDocuments') || [];
+  const selectedCertifications = useWatch({ control, name: 'certifications' }) || [];
+  const uploadedDocs = useWatch({ control, name: 'uploadedDocuments' }) || [];
 
   // Restore draft from localStorage if available
   useEffect(() => {
@@ -87,7 +90,6 @@ export function CreateVendorForm() {
       if (saved) {
         const parsed = JSON.parse(saved);
         reset(parsed);
-        setDraftSavedAt(new Date().toLocaleTimeString());
       }
     } catch {
       // Ignore
@@ -96,7 +98,7 @@ export function CreateVendorForm() {
 
   // Save current form state as draft
   const handleSaveDraft = () => {
-    const currentValues = watch();
+    const currentValues = getValues();
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(currentValues));
     const now = new Date().toLocaleTimeString();
     setDraftSavedAt(now);
@@ -791,58 +793,64 @@ export function CreateVendorForm() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {/* Box 1: General Info Summary */}
-              <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-800/40 space-y-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">General & Tax</h4>
-                  <button type="button" onClick={() => setActiveStep(1)} className="text-[11px] text-indigo-600 font-medium hover:underline">Edit</button>
-                </div>
-                <div className="text-xs space-y-1 text-slate-600 dark:text-slate-300">
-                  <p><strong>Name:</strong> {watch('name')}</p>
-                  <p><strong>Category:</strong> {watch('category')}</p>
-                  <p><strong>GSTIN:</strong> {watch('gst')}</p>
-                  <p><strong>PAN:</strong> {watch('pan')}</p>
-                </div>
-              </div>
+              {(() => {
+                const values = getValues();
+                return (
+                  <>
+                    <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-800/40 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">General & Tax</h4>
+                        <button type="button" onClick={() => setActiveStep(1)} className="text-[11px] text-indigo-600 font-medium hover:underline">Edit</button>
+                      </div>
+                      <div className="text-xs space-y-1 text-slate-600 dark:text-slate-300">
+                        <p><strong>Name:</strong> {values.name}</p>
+                        <p><strong>Category:</strong> {values.category}</p>
+                        <p><strong>GSTIN:</strong> {values.gst}</p>
+                        <p><strong>PAN:</strong> {values.pan}</p>
+                      </div>
+                    </div>
 
-              {/* Box 2: Address Summary */}
-              <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-800/40 space-y-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Address Location</h4>
-                  <button type="button" onClick={() => setActiveStep(2)} className="text-[11px] text-indigo-600 font-medium hover:underline">Edit</button>
-                </div>
-                <div className="text-xs space-y-1 text-slate-600 dark:text-slate-300">
-                  <p>{watch('addressStreet')}</p>
-                  <p>{watch('city')}, {watch('state')} - {watch('pincode')}</p>
-                  <p>{watch('country')}</p>
-                </div>
-              </div>
+                    {/* Box 2: Address Summary */}
+                    <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-800/40 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Address Location</h4>
+                        <button type="button" onClick={() => setActiveStep(2)} className="text-[11px] text-indigo-600 font-medium hover:underline">Edit</button>
+                      </div>
+                      <div className="text-xs space-y-1 text-slate-600 dark:text-slate-300">
+                        <p>{values.addressStreet}</p>
+                        <p>{values.city}, {values.state} - {values.pincode}</p>
+                        <p>{values.country}</p>
+                      </div>
+                    </div>
 
-              {/* Box 3: Contact & Banking Summary */}
-              <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-800/40 space-y-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Contact & Banking</h4>
-                  <button type="button" onClick={() => setActiveStep(3)} className="text-[11px] text-indigo-600 font-medium hover:underline">Edit</button>
-                </div>
-                <div className="text-xs space-y-1 text-slate-600 dark:text-slate-300">
-                  <p><strong>Lead:</strong> {watch('contactName')} ({watch('contactEmail')})</p>
-                  <p><strong>Phone:</strong> {watch('contactPhone')}</p>
-                  <p><strong>Bank:</strong> {watch('bankName')} ({watch('ifscCode')})</p>
-                </div>
-              </div>
+                    {/* Box 3: Contact & Banking Summary */}
+                    <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-800/40 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Contact & Banking</h4>
+                        <button type="button" onClick={() => setActiveStep(3)} className="text-[11px] text-indigo-600 font-medium hover:underline">Edit</button>
+                      </div>
+                      <div className="text-xs space-y-1 text-slate-600 dark:text-slate-300">
+                        <p><strong>Lead:</strong> {values.contactName} ({values.contactEmail})</p>
+                        <p><strong>Phone:</strong> {values.contactPhone}</p>
+                        <p><strong>Bank:</strong> {values.bankName} ({values.ifscCode})</p>
+                      </div>
+                    </div>
 
-              {/* Box 4: Terms & Uploads Summary */}
-              <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-800/40 space-y-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Terms & Documents</h4>
-                  <button type="button" onClick={() => setActiveStep(4)} className="text-[11px] text-indigo-600 font-medium hover:underline">Edit</button>
-                </div>
-                <div className="text-xs space-y-1 text-slate-600 dark:text-slate-300">
-                  <p><strong>Payment Terms:</strong> {watch('paymentTerms')}</p>
-                  <p><strong>Uploaded Files:</strong> {uploadedDocs.length} file(s)</p>
-                  <p><strong>Certifications:</strong> {selectedCertifications.join(', ') || 'None'}</p>
-                </div>
-              </div>
+                    {/* Box 4: Terms & Uploads Summary */}
+                    <div className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-800/40 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Terms & Documents</h4>
+                        <button type="button" onClick={() => setActiveStep(4)} className="text-[11px] text-indigo-600 font-medium hover:underline">Edit</button>
+                      </div>
+                      <div className="text-xs space-y-1 text-slate-600 dark:text-slate-300">
+                        <p><strong>Payment Terms:</strong> {values.paymentTerms}</p>
+                        <p><strong>Uploaded Files:</strong> {uploadedDocs.length} file(s)</p>
+                        <p><strong>Certifications:</strong> {selectedCertifications.join(', ') || 'None'}</p>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </div>
         )}

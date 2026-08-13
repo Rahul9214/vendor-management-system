@@ -19,19 +19,19 @@ export function usePerformanceScorecard(params: PerformanceFilterParams = {}) {
   });
 }
 
-export function usePerformanceTrends(params: PerformanceFilterParams = {}) {
+export function usePerformanceTrends() {
   return useQuery({
-    queryKey: performanceKeys.trends(params),
-    queryFn: () => performanceService.getPerformanceTrends(params),
+    queryKey: performanceKeys.trends({}),
+    queryFn: () => performanceService.getPerformanceTrends(),
     staleTime: 5 * 60 * 1000,
     select: (res) => res.data,
   });
 }
 
-export function useRecentIssues(params: PerformanceFilterParams = {}) {
+export function useRecentIssues() {
   return useQuery({
-    queryKey: performanceKeys.issues(params),
-    queryFn: () => performanceService.getRecentIssues(params),
+    queryKey: performanceKeys.issues({}),
+    queryFn: () => performanceService.getRecentIssues(),
     staleTime: 2 * 60 * 1000,
     select: (res) => res.data,
   });
