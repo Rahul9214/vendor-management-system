@@ -44,7 +44,7 @@ export const Header = memo(function Header() {
         </button>
 
         <div>
-          <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">
+          <h1 className="text-base font-bold text-slate-900 dark:text-white">
             {title}
           </h1>
           <p className="hidden text-xs text-slate-400 sm:block">
