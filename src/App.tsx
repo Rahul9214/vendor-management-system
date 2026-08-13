@@ -4,9 +4,10 @@ import { AppLayout } from '@/layouts/AppLayout';
 import { LoadingScreen } from '@/components/shared/Skeleton';
 
 // ─── Lazy-loaded pages (code splitting per route) ─────────────────────────────
-const DashboardPage  = lazy(() => import('@/pages/Dashboard'));
-const VendorsPage    = lazy(() => import('@/pages/Vendors'));
-const ComingSoonPage = lazy(() => import('@/pages/ComingSoon'));
+const DashboardPage    = lazy(() => import('@/pages/Dashboard'));
+const VendorsPage      = lazy(() => import('@/pages/Vendors'));
+const VendorDetailPage = lazy(() => import('@/pages/VendorDetail'));
+const ComingSoonPage   = lazy(() => import('@/pages/ComingSoon'));
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 
@@ -38,7 +39,27 @@ export default function App() {
             }
           />
 
-          {/* Modules 3–8 – Coming soon placeholder */}
+          {/* Module 3 – Vendor Details (9 Tabs) */}
+          <Route
+            path="/vendors/:id"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <VendorDetailPage />
+              </Suspense>
+            }
+          />
+
+          {/* Module 3 – Onboarding Shortcut */}
+          <Route
+            path="/onboarding"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <VendorDetailPage />
+              </Suspense>
+            }
+          />
+
+          {/* Modules 4–8 – Coming soon placeholder */}
           <Route
             path="*"
             element={
