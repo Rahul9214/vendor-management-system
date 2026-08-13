@@ -9,6 +9,7 @@ const VendorsPage     = lazy(() => import('@/pages/Vendors'));
 const VendorDetailPage= lazy(() => import('@/pages/VendorDetail'));
 const OnboardingPage  = lazy(() => import('@/pages/Onboarding'));
 const PerformancePage = lazy(() => import('@/pages/Performance'));
+const ApprovalWorkflowPage = lazy(() => import('@/pages/ApprovalWorkflow'));
 const ComingSoonPage  = lazy(() => import('@/pages/ComingSoon'));
 
 // ─── App ──────────────────────────────────────────────────────────────────────
@@ -71,7 +72,17 @@ export default function App() {
             }
           />
 
-          {/* Modules 6–8 – Coming soon placeholder */}
+          {/* Module 6 – Approval Workflow & Governance */}
+          <Route
+            path="/approvals"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <ApprovalWorkflowPage />
+              </Suspense>
+            }
+          />
+
+          {/* Modules 7–8 – Coming soon placeholder */}
           <Route
             path="*"
             element={
