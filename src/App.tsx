@@ -7,6 +7,7 @@ import { LoadingScreen } from '@/components/shared/Skeleton';
 const DashboardPage    = lazy(() => import('@/pages/Dashboard'));
 const VendorsPage      = lazy(() => import('@/pages/Vendors'));
 const VendorDetailPage = lazy(() => import('@/pages/VendorDetail'));
+const OnboardingPage   = lazy(() => import('@/pages/Onboarding'));
 const ComingSoonPage   = lazy(() => import('@/pages/ComingSoon'));
 
 // ─── App ──────────────────────────────────────────────────────────────────────
@@ -49,17 +50,17 @@ export default function App() {
             }
           />
 
-          {/* Module 3 – Onboarding Shortcut */}
+          {/* Module 4 – Vendor Onboarding Form */}
           <Route
             path="/onboarding"
             element={
               <Suspense fallback={<LoadingScreen />}>
-                <VendorDetailPage />
+                <OnboardingPage />
               </Suspense>
             }
           />
 
-          {/* Modules 4–8 – Coming soon placeholder */}
+          {/* Modules 5–8 – Coming soon placeholder */}
           <Route
             path="*"
             element={
