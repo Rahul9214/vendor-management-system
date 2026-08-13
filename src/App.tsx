@@ -4,11 +4,12 @@ import { AppLayout } from '@/layouts/AppLayout';
 import { LoadingScreen } from '@/components/shared/Skeleton';
 
 // ─── Lazy-loaded pages (code splitting per route) ─────────────────────────────
-const DashboardPage    = lazy(() => import('@/pages/Dashboard'));
-const VendorsPage      = lazy(() => import('@/pages/Vendors'));
-const VendorDetailPage = lazy(() => import('@/pages/VendorDetail'));
-const OnboardingPage   = lazy(() => import('@/pages/Onboarding'));
-const ComingSoonPage   = lazy(() => import('@/pages/ComingSoon'));
+const DashboardPage   = lazy(() => import('@/pages/Dashboard'));
+const VendorsPage     = lazy(() => import('@/pages/Vendors'));
+const VendorDetailPage= lazy(() => import('@/pages/VendorDetail'));
+const OnboardingPage  = lazy(() => import('@/pages/Onboarding'));
+const PerformancePage = lazy(() => import('@/pages/Performance'));
+const ComingSoonPage  = lazy(() => import('@/pages/ComingSoon'));
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 
@@ -60,7 +61,17 @@ export default function App() {
             }
           />
 
-          {/* Modules 5–8 – Coming soon placeholder */}
+          {/* Module 5 – Vendor Performance Dashboard */}
+          <Route
+            path="/performance"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <PerformancePage />
+              </Suspense>
+            }
+          />
+
+          {/* Modules 6–8 – Coming soon placeholder */}
           <Route
             path="*"
             element={
