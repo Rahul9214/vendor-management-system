@@ -31,4 +31,4 @@ export const NAV_ITEMS: NavItem[] = [
 ];
 
 /** Modules that are fully implemented (unlocked) */
-export const IMPLEMENTED_MODULES = new Set([1, 2, 3, 4, 5, 6]);
+export const IMPLEMENTED_MODULES = new Set([1, 2, 3, 4, 5, 6, 7]);
