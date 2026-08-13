@@ -11,6 +11,8 @@ const OnboardingPage       = lazy(() => import('@/pages/Onboarding'));
 const PerformancePage      = lazy(() => import('@/pages/Performance'));
 const ApprovalWorkflowPage = lazy(() => import('@/pages/ApprovalWorkflow'));
 const NotificationsPage    = lazy(() => import('@/pages/Notifications'));
+const ContractsPage        = lazy(() => import('@/pages/Contracts'));
+const OrdersPage           = lazy(() => import('@/pages/Orders'));
 const SettingsPage         = lazy(() => import('@/pages/Settings'));
 const ComingSoonPage       = lazy(() => import('@/pages/ComingSoon'));
 
@@ -64,6 +66,27 @@ export default function App() {
             }
           />
 
+          {/* Purchase Orders */}
+          <Route
+            path="/orders"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <OrdersPage />
+              </Suspense>
+            }
+          />
+          <Route path="/purchase-orders" element={<Navigate to="/orders" replace />} />
+
+          {/* Contracts Management */}
+          <Route
+            path="/contracts"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <ContractsPage />
+              </Suspense>
+            }
+          />
+
           {/* Module 5 – Vendor Performance Dashboard */}
           <Route
             path="/performance"
@@ -74,7 +97,7 @@ export default function App() {
             }
           />
 
-          {/* Module 6 – Approval Workflow & Governance */}
+          {/* Module 6 – Approval Workflow & Governance / Compliance */}
           <Route
             path="/approvals"
             element={
@@ -83,6 +106,7 @@ export default function App() {
               </Suspense>
             }
           />
+          <Route path="/compliance" element={<Navigate to="/approvals" replace />} />
 
           {/* Module 7 – Notifications & Alert Center */}
           <Route
