@@ -107,7 +107,7 @@ export default function KanbanPage() {
       </div>
 
       {/* 5-Column Drag and Drop Kanban Board Grid */}
-      <div className="flex items-start gap-4 overflow-x-auto pb-6 pt-2">
+      <div className="flex items-start gap-4 overflow-x-auto pb-6 pt-2 no-scrollbar">
         {KANBAN_COLUMNS.map((column) => {
           const colCards = filteredCards.filter((c) => c.stage === column.id);
           return (

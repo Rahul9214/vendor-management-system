@@ -76,12 +76,11 @@ export const Sidebar = memo(function Sidebar() {
               const Icon          = item.icon;
 
               return (
-                <li key={item.id}>
+                <li key={item.id} className="relative group">
                   <NavLink
                     to={item.path}
-                    title={collapsed ? item.label : undefined}
                     className={cn(
-                      'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150',
+                      'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150',
                       isActive
                         ? 'bg-indigo-600 text-white shadow-sm'
                         : isImplemented
@@ -106,6 +105,16 @@ export const Sidebar = memo(function Sidebar() {
                       </>
                     )}
                   </NavLink>
+
+                  {/* Floating tooltip popover for collapsed state */}
+                  {collapsed && (
+                    <div className="absolute left-14 top-1/2 -translate-y-1/2 z-50 hidden group-hover:flex items-center gap-2 rounded-xl bg-slate-900/95 px-3 py-1.5 text-xs font-semibold text-white shadow-xl border border-slate-700/80 whitespace-nowrap backdrop-blur-md pointer-events-none animate-in fade-in-50 slide-in-from-left-2">
+                      <span>{item.label}</span>
+                      <span className="rounded bg-indigo-500/20 px-1.5 py-0.5 text-[9px] font-bold text-indigo-300">
+                        Mod {item.module}
+                      </span>
+                    </div>
+                  )}
                 </li>
               );
             })}

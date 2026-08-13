@@ -121,7 +121,7 @@ export default function VendorDetailPage() {
       </div>
 
       {/* 9 Tabs Horizontal Bar */}
-      <div className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950 rounded-2xl p-2 shadow-xs overflow-x-auto">
+      <div className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950 rounded-2xl p-2 shadow-xs overflow-x-auto no-scrollbar">
         <nav className="flex space-x-1 no-scrollbar min-w-max">
           {TABS.map((tab) => {
             const Icon = tab.icon;
