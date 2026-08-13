@@ -1,0 +1,120 @@
+import type {
+  VendorPerformanceScorecard,
+  VendorPerformanceTrendPoint,
+  PerformanceIssue,
+  PaymentFulfillmentHistory,
+} from '@/types';
+
+export const MOCK_OVERALL_SCORECARD: VendorPerformanceScorecard = {
+  vendorId: 'all',
+  vendorName: 'All Enterprise Vendors (Fleet Average)',
+  vendorCode: 'FLEET-AVG',
+  category: 'All Categories',
+  qualityScore: 95.8,
+  deliveryScore: 96.4,
+  responseTimeHours: 3.2,
+  paymentAccuracyRate: 98.9,
+  riskScore: 16,
+  riskLevel: 'low',
+  rating: 4.6,
+  totalEvaluatedOrders: 1420,
+};
+
+export const MOCK_VENDOR_SCORECARDS: Record<string, VendorPerformanceScorecard> = {
+  'vnd-001': {
+    vendorId: 'vnd-001',
+    vendorName: 'Acme Global Logistics',
+    vendorCode: 'VND-2024-001',
+    category: 'Logistics',
+    qualityScore: 98.2,
+    deliveryScore: 99.1,
+    responseTimeHours: 1.8,
+    paymentAccuracyRate: 99.5,
+    riskScore: 8,
+    riskLevel: 'low',
+    rating: 4.8,
+    totalEvaluatedOrders: 142,
+  },
+  'vnd-002': {
+    vendorId: 'vnd-002',
+    vendorName: 'Apex Semiconductor Systems',
+    vendorCode: 'VND-2024-002',
+    category: 'Technology',
+    qualityScore: 99.4,
+    deliveryScore: 97.8,
+    responseTimeHours: 2.1,
+    paymentAccuracyRate: 100,
+    riskScore: 6,
+    riskLevel: 'low',
+    rating: 4.9,
+    totalEvaluatedOrders: 89,
+  },
+  'vnd-003': {
+    vendorId: 'vnd-003',
+    vendorName: 'Vortex Industrial Materials',
+    vendorCode: 'VND-2024-003',
+    category: 'Raw Materials',
+    qualityScore: 64.2,
+    deliveryScore: 71.0,
+    responseTimeHours: 18.5,
+    paymentAccuracyRate: 82.0,
+    riskScore: 78,
+    riskLevel: 'high',
+    rating: 2.1,
+    totalEvaluatedOrders: 18,
+  },
+};
+
+export const MOCK_PERFORMANCE_TRENDS: VendorPerformanceTrendPoint[] = [
+  { period: 'Jan 2026', qualityScore: 93.5, deliveryScore: 94.2, slaCompliance: 92.0, targetBenchmark: 95.0 },
+  { period: 'Feb 2026', qualityScore: 94.1, deliveryScore: 95.0, slaCompliance: 93.5, targetBenchmark: 95.0 },
+  { period: 'Mar 2026', qualityScore: 95.0, deliveryScore: 94.8, slaCompliance: 94.0, targetBenchmark: 95.0 },
+  { period: 'Apr 2026', qualityScore: 95.8, deliveryScore: 96.2, slaCompliance: 95.5, targetBenchmark: 95.0 },
+  { period: 'May 2026', qualityScore: 96.2, deliveryScore: 95.9, slaCompliance: 96.0, targetBenchmark: 95.0 },
+  { period: 'Jun 2026', qualityScore: 95.5, deliveryScore: 96.8, slaCompliance: 96.5, targetBenchmark: 95.0 },
+  { period: 'Jul 2026', qualityScore: 96.9, deliveryScore: 97.4, slaCompliance: 97.0, targetBenchmark: 95.0 },
+  { period: 'Aug 2026', qualityScore: 97.4, deliveryScore: 98.1, slaCompliance: 97.8, targetBenchmark: 95.0 },
+];
+
+export const MOCK_RECENT_PERFORMANCE_ISSUES: PerformanceIssue[] = [
+  {
+    id: 'iss-801',
+    issueCode: 'QUAL-2026-091',
+    title: 'Batch #401 PCB Sub-assembly Soldering Defect',
+    vendorName: 'Apex Semiconductor Systems',
+    category: 'Quality Defect',
+    severity: 'medium',
+    status: 'under_review',
+    loggedDate: '2026-08-08T00:00:00.000Z',
+    impactScore: '2.5% defect rate on shipment',
+  },
+  {
+    id: 'iss-802',
+    issueCode: 'DEL-2026-042',
+    title: '48-hour transit delay on Midwest freight route',
+    vendorName: 'Acme Global Logistics',
+    category: 'Late Delivery',
+    severity: 'low',
+    status: 'resolved',
+    loggedDate: '2026-08-02T00:00:00.000Z',
+    impactScore: 'SLA grace period applied',
+  },
+  {
+    id: 'iss-803',
+    issueCode: 'SLA-2026-015',
+    title: 'Failed 3-day replacement turnaround SLA',
+    vendorName: 'Vortex Industrial Materials',
+    category: 'SLA Breach',
+    severity: 'high',
+    status: 'open',
+    loggedDate: '2026-07-28T00:00:00.000Z',
+    impactScore: 'Severe breach - Vendor blacklisted',
+  },
+];
+
+export const MOCK_PAYMENT_FULFILLMENT: PaymentFulfillmentHistory = {
+  totalInvoices: 348,
+  paidOnTimePercentage: 97.4,
+  avgPaymentCycleDays: 18.2,
+  earlyPaymentDiscountCaptured: 48500,
+};
