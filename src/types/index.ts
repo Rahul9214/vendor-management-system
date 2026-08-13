@@ -32,6 +32,14 @@ export type {
 } from './performance';
 
 export type {
+  ApprovalStatus,
+  ApprovalStep,
+  ApprovalComment,
+  ApprovalRequest,
+  ApprovalActionPayload,
+} from './approval';
+
+export type {
   ApiResponse,
   ApiError,
   PaginatedResponse,
