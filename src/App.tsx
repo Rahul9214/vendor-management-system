@@ -4,14 +4,15 @@ import { AppLayout } from '@/layouts/AppLayout';
 import { LoadingScreen } from '@/components/shared/Skeleton';
 
 // ─── Lazy-loaded pages (code splitting per route) ─────────────────────────────
-const DashboardPage   = lazy(() => import('@/pages/Dashboard'));
-const VendorsPage     = lazy(() => import('@/pages/Vendors'));
-const VendorDetailPage= lazy(() => import('@/pages/VendorDetail'));
-const OnboardingPage  = lazy(() => import('@/pages/Onboarding'));
-const PerformancePage = lazy(() => import('@/pages/Performance'));
+const DashboardPage        = lazy(() => import('@/pages/Dashboard'));
+const VendorsPage          = lazy(() => import('@/pages/Vendors'));
+const VendorDetailPage     = lazy(() => import('@/pages/VendorDetail'));
+const OnboardingPage       = lazy(() => import('@/pages/Onboarding'));
+const PerformancePage      = lazy(() => import('@/pages/Performance'));
 const ApprovalWorkflowPage = lazy(() => import('@/pages/ApprovalWorkflow'));
-const NotificationsPage = lazy(() => import('@/pages/Notifications'));
-const ComingSoonPage  = lazy(() => import('@/pages/ComingSoon'));
+const NotificationsPage    = lazy(() => import('@/pages/Notifications'));
+const SettingsPage         = lazy(() => import('@/pages/Settings'));
+const ComingSoonPage       = lazy(() => import('@/pages/ComingSoon'));
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 
@@ -93,7 +94,17 @@ export default function App() {
             }
           />
 
-          {/* Module 8 – Coming soon placeholder */}
+          {/* Module 8 – Responsive Experience & Settings */}
+          <Route
+            path="/settings"
+            element={
+              <Suspense fallback={<LoadingScreen />}>
+                <SettingsPage />
+              </Suspense>
+            }
+          />
+
+          {/* Catch-all route */}
           <Route
             path="*"
             element={
