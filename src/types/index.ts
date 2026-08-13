@@ -40,6 +40,13 @@ export type {
 } from './approval';
 
 export type {
+  NotificationCategory,
+  NotificationPriority,
+  VendorNotification,
+  NotificationFilterParams,
+} from './notification';
+
+export type {
   ApiResponse,
   ApiError,
   PaginatedResponse,
