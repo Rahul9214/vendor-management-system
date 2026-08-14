@@ -455,6 +455,7 @@ export const VendorTable = memo(function VendorTable({
           <span>Rows per page:</span>
           <select
             value={pageSize}
+            aria-label="Rows per page"
             onChange={(e) =>
               onFilterChange({
                 ...filters,
@@ -482,6 +483,7 @@ export const VendorTable = memo(function VendorTable({
             type="button"
             disabled={page <= 1}
             onClick={() => onFilterChange({ ...filters, page: 1 })}
+            aria-label="Go to first page"
             className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-800"
             title="First Page"
           >
@@ -491,6 +493,7 @@ export const VendorTable = memo(function VendorTable({
             type="button"
             disabled={page <= 1}
             onClick={() => onFilterChange({ ...filters, page: page - 1 })}
+            aria-label="Go to previous page"
             className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-800"
             title="Previous Page"
           >
@@ -505,6 +508,7 @@ export const VendorTable = memo(function VendorTable({
             type="button"
             disabled={page >= totalPages}
             onClick={() => onFilterChange({ ...filters, page: page + 1 })}
+            aria-label="Go to next page"
             className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-800"
             title="Next Page"
           >
@@ -514,6 +518,7 @@ export const VendorTable = memo(function VendorTable({
             type="button"
             disabled={page >= totalPages}
             onClick={() => onFilterChange({ ...filters, page: totalPages })}
+            aria-label="Go to last page"
             className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 disabled:opacity-40 hover:bg-slate-100 dark:hover:bg-slate-800"
             title="Last Page"
           >

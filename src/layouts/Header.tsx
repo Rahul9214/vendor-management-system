@@ -149,6 +149,7 @@ export const Header = memo(function Header() {
             <input
               type="text"
               placeholder="Search vendors, POs, MSAs..."
+              aria-label="Search vendors, purchase orders, and contracts"
               value={searchQuery}
               onFocus={() => setSearchOpen(true)}
               onChange={(e) => {
@@ -165,6 +166,7 @@ export const Header = memo(function Header() {
             {searchQuery && (
               <button
                 type="button"
+                aria-label="Clear search input"
                 onClick={() => {
                   setSearchQuery('');
                   setSearchOpen(false);
@@ -297,6 +299,7 @@ export const Header = memo(function Header() {
           type="button"
           onClick={handleRefreshAll}
           title="Refresh dashboard data"
+          aria-label="Refresh dashboard data"
           className="rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-100"
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -312,6 +315,7 @@ export const Header = memo(function Header() {
           type="button"
           onClick={toggleTheme}
           title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           className="rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-100"
         >
           {theme === 'dark'
@@ -325,6 +329,7 @@ export const Header = memo(function Header() {
             type="button"
             onClick={() => setProfileOpen(!profileOpen)}
             title="User profile menu"
+            aria-label="Open user profile menu"
             className="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-indigo-600 text-xs font-bold text-white shadow-md transition-all hover:scale-105 ring-2 ring-indigo-500/20 active:scale-95"
           >
             AD

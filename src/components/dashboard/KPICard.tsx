@@ -84,10 +84,10 @@ export const KPICard = memo(function KPICard({
         <p className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
           {value}
         </p>
-        <p className="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+        <p className="mt-1 text-sm font-semibold text-slate-700 dark:text-slate-300">
           {label}
         </p>
-        <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
+        <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
           {description}
         </p>
       </div>
