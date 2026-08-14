@@ -116,13 +116,12 @@ export const Sidebar = memo(function Sidebar() {
                     )}
                   </NavLink>
 
-                  {/* Floating tooltip popover for collapsed state */}
+                  {/* Floating arrow tooltip popover for collapsed state matching screenshot */}
                   {collapsed && (
-                    <div className="absolute left-14 top-1/2 -translate-y-1/2 z-50 hidden group-hover:flex items-center gap-2 rounded-xl bg-slate-900/95 px-3 py-1.5 text-xs font-semibold text-white shadow-2xl border border-slate-700/80 whitespace-nowrap backdrop-blur-md pointer-events-none animate-in fade-in-50 slide-in-from-left-2">
+                    <div className="absolute left-[54px] top-1/2 -translate-y-1/2 z-50 hidden group-hover:flex items-center rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-2xl border border-slate-700/60 whitespace-nowrap pointer-events-none animate-in fade-in-50 slide-in-from-left-2">
+                      {/* Pointer arrow tip */}
+                      <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-0 h-0 border-y-[5px] border-y-transparent border-r-[6px] border-r-slate-900" />
                       <span>{item.label}</span>
-                      <span className="rounded bg-indigo-500/20 px-1.5 py-0.5 text-[9px] font-bold text-indigo-300">
-                        Mod {item.module}
-                      </span>
                     </div>
                   )}
                 </li>
