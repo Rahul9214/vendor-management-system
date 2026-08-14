@@ -33,10 +33,10 @@ function TrendBadge({ trend, invert }: TrendBadgeProps) {
   const isNeutral  = trend === 0;
 
   const colorClass = isNeutral
-    ? 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
+    ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
     : isPositive
-    ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400'
-    : 'bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400';
+    ? 'bg-emerald-50 text-emerald-700 font-bold dark:bg-emerald-950/60 dark:text-emerald-300'
+    : 'bg-red-50 text-red-700 font-bold dark:bg-red-950/60 dark:text-red-300';
 
   const Icon = isNeutral ? Minus : isPositive ? ArrowUp : ArrowDown;
 

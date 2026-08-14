@@ -40,7 +40,7 @@ function buildKPIConfig(kpis: KPIData): KPIConfig[] {
       description:   'All registered vendors',
       trend:         kpis.trends.totalVendors,
       icon:          Building2,
-      iconClassName: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400',
+      iconClassName: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300',
     },
     {
       label:         'Active Vendors',
@@ -48,7 +48,7 @@ function buildKPIConfig(kpis: KPIData): KPIConfig[] {
       description:   'Currently engaged',
       trend:         kpis.trends.activeVendors,
       icon:          CheckCircle2,
-      iconClassName: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400',
+      iconClassName: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300',
     },
     {
       label:         'Blacklisted',
@@ -56,7 +56,7 @@ function buildKPIConfig(kpis: KPIData): KPIConfig[] {
       description:   'Access suspended',
       trend:         kpis.trends.blacklistedVendors,
       icon:          Ban,
-      iconClassName: 'bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-400',
+      iconClassName: 'bg-red-50 text-red-700 dark:bg-red-950/60 dark:text-red-300',
       invertTrend:   true,
     },
     {
@@ -65,7 +65,7 @@ function buildKPIConfig(kpis: KPIData): KPIConfig[] {
       description:   'Awaiting review',
       trend:         kpis.trends.pendingApprovals,
       icon:          Clock,
-      iconClassName: 'bg-amber-50 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400',
+      iconClassName: 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300',
     },
     {
       label:         'Avg. Rating',
@@ -73,7 +73,7 @@ function buildKPIConfig(kpis: KPIData): KPIConfig[] {
       description:   'Out of 5.0 stars',
       trend:         kpis.trends.averageRating,
       icon:          Star,
-      iconClassName: 'bg-yellow-50 text-yellow-600 dark:bg-yellow-950/60 dark:text-yellow-400',
+      iconClassName: 'bg-yellow-50 text-yellow-700 dark:bg-yellow-950/60 dark:text-yellow-300',
     },
     {
       label:         'Active POs',
@@ -81,7 +81,7 @@ function buildKPIConfig(kpis: KPIData): KPIConfig[] {
       description:   'Open purchase orders',
       trend:         kpis.trends.activePurchaseOrders,
       icon:          ShoppingCart,
-      iconClassName: 'bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400',
+      iconClassName: 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300',
     },
   ];
 }
