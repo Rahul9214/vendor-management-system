@@ -37,7 +37,7 @@ export const Sidebar = memo(function Sidebar() {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 flex flex-col transition-all duration-300 ease-in-out lg:static lg:z-auto',
+          'fixed inset-y-0 left-0 z-50 flex flex-col transition-all duration-300 ease-in-out lg:static lg:z-30',
           'border-r border-slate-200/80 bg-white/95 text-slate-800 shadow-sm backdrop-blur-md',
           'dark:border-slate-800/80 dark:bg-slate-950 dark:text-slate-100',
           collapsed ? '-translate-x-full lg:translate-x-0 lg:w-[60px]' : 'translate-x-0 w-56',
@@ -78,7 +78,13 @@ export const Sidebar = memo(function Sidebar() {
         </div>
 
         {/* ── Navigation Stream ── */}
-        <nav className="flex-1 overflow-y-auto no-scrollbar py-3" aria-label="Main navigation">
+        <nav
+          className={cn(
+            'flex-1 py-3',
+            collapsed ? 'overflow-visible' : 'overflow-y-auto no-scrollbar',
+          )}
+          aria-label="Main navigation"
+        >
           <ul className="space-y-1 px-2">
             {NAV_ITEMS.map((item) => {
               const isImplemented = IMPLEMENTED_MODULES.has(item.module);
@@ -116,9 +122,9 @@ export const Sidebar = memo(function Sidebar() {
                     )}
                   </NavLink>
 
-                  {/* Floating arrow tooltip popover for collapsed state matching screenshot */}
+                  {/* Floating arrow tooltip popover for collapsed state */}
                   {collapsed && (
-                    <div className="absolute left-[54px] top-1/2 -translate-y-1/2 z-50 hidden group-hover:flex items-center rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-2xl border border-slate-700/60 whitespace-nowrap pointer-events-none animate-in fade-in-50 slide-in-from-left-2">
+                    <div className="absolute left-[56px] top-1/2 -translate-y-1/2 z-[100] hidden group-hover:flex items-center rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-2xl border border-slate-700/60 whitespace-nowrap pointer-events-none animate-in fade-in-50 slide-in-from-left-2">
                       {/* Pointer arrow tip */}
                       <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-0 h-0 border-y-[5px] border-y-transparent border-r-[6px] border-r-slate-900" />
                       <span>{item.label}</span>
