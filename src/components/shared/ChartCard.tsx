@@ -44,7 +44,7 @@ export function ChartCard({
       </div>
 
       {/* Chart area */}
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 min-h-[280px] w-full relative">{children}</div>
     </div>
   );
 }

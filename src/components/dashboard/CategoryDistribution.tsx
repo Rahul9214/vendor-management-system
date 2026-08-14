@@ -98,7 +98,7 @@ export const CategoryDistribution = memo(function CategoryDistribution() {
       title="Category Distribution"
       description={`${totalVendors.toLocaleString()} vendors across ${chartData.length} categories`}
     >
-      <ResponsiveContainer width="100%" height={220}>
+      <ResponsiveContainer width="100%" height={220} debounce={50}>
         <PieChart>
           <Pie
             data={chartData}

@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useMemo, lazy, Suspense } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   Building2,
@@ -11,14 +11,35 @@ import {
 import type { LucideIcon } from 'lucide-react';
 
 import { KPICard } from '@/components/dashboard/KPICard';
-import { VendorPerformanceTrend } from '@/components/dashboard/VendorPerformanceTrend';
-import { CategoryDistribution } from '@/components/dashboard/CategoryDistribution';
-import { MonthlyPurchaseValue } from '@/components/dashboard/MonthlyPurchaseValue';
-import { RatingDistribution } from '@/components/dashboard/RatingDistribution';
-import { KPICardSkeleton } from '@/components/shared/Skeleton';
+import { KPICardSkeleton, ChartCardSkeleton } from '@/components/shared/Skeleton';
 import { ErrorState } from '@/components/shared/ErrorState';
 import { dashboardKeys, useKPIs } from '@/hooks/useDashboard';
 import type { KPIData } from '@/types';
+
+// Lazy-load Recharts components to decouple chart bundle parsing from initial paint
+const VendorPerformanceTrend = lazy(() =>
+  import('@/components/dashboard/VendorPerformanceTrend').then((m) => ({
+    default: m.VendorPerformanceTrend,
+  })),
+);
+
+const CategoryDistribution = lazy(() =>
+  import('@/components/dashboard/CategoryDistribution').then((m) => ({
+    default: m.CategoryDistribution,
+  })),
+);
+
+const MonthlyPurchaseValue = lazy(() =>
+  import('@/components/dashboard/MonthlyPurchaseValue').then((m) => ({
+    default: m.MonthlyPurchaseValue,
+  })),
+);
+
+const RatingDistribution = lazy(() =>
+  import('@/components/dashboard/RatingDistribution').then((m) => ({
+    default: m.RatingDistribution,
+  })),
+);
 
 // ─── KPI Configuration ────────────────────────────────────────────────────────
 
@@ -119,7 +140,7 @@ const KPISection = memo(function KPISection() {
 
 // ─── Dashboard Page ───────────────────────────────────────────────────────────
 
-const DashboardPage = memo(function DashboardPage() {
+export const DashboardPage = memo(function DashboardPage() {
   const queryClient = useQueryClient();
 
   const handleRefreshAll = () => {
@@ -127,16 +148,14 @@ const DashboardPage = memo(function DashboardPage() {
   };
 
   return (
-    <div className="mx-auto max-w-screen-2xl space-y-6">
-
-      {/* ── Page Hero Header ── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 p-6 text-white shadow-lg">
-        {/* Dot-grid overlay for texture */}
+    <div className="space-y-8">
+      {/* ── Page Header / Hero banner ── */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 p-6 text-white shadow-lg">
         <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-[0.08]"
+          className="absolute inset-0 opacity-10"
           style={{
-            backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+            backgroundImage:
+              'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
             backgroundSize: '20px 20px',
           }}
         />
@@ -164,14 +183,15 @@ const DashboardPage = memo(function DashboardPage() {
       </div>
 
       {/* ── KPI Cards ── */}
-      <section aria-labelledby="kpi-heading">
-        <h2 id="kpi-heading" className="sr-only">Key Performance Indicators</h2>
+      <section aria-label="Key performance metrics">
         <KPISection />
       </section>
 
       {/* ── Charts Row 1: Performance Trend (full width) ── */}
       <section aria-label="Vendor performance trend">
-        <VendorPerformanceTrend />
+        <Suspense fallback={<ChartCardSkeleton />}>
+          <VendorPerformanceTrend />
+        </Suspense>
       </section>
 
       {/* ── Charts Row 2: Category + Monthly Purchase ── */}
@@ -180,10 +200,14 @@ const DashboardPage = memo(function DashboardPage() {
         className="grid gap-6 xl:grid-cols-5"
       >
         <div className="xl:col-span-2">
-          <CategoryDistribution />
+          <Suspense fallback={<ChartCardSkeleton />}>
+            <CategoryDistribution />
+          </Suspense>
         </div>
         <div className="xl:col-span-3">
-          <MonthlyPurchaseValue />
+          <Suspense fallback={<ChartCardSkeleton />}>
+            <MonthlyPurchaseValue />
+          </Suspense>
         </div>
       </section>
 
@@ -193,7 +217,9 @@ const DashboardPage = memo(function DashboardPage() {
         className="grid gap-6 xl:grid-cols-5"
       >
         <div className="xl:col-span-2">
-          <RatingDistribution />
+          <Suspense fallback={<ChartCardSkeleton />}>
+            <RatingDistribution />
+          </Suspense>
         </div>
         {/* Summary stats panel */}
         <div className="xl:col-span-3">

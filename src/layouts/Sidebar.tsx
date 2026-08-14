@@ -70,6 +70,7 @@ export const Sidebar = memo(function Sidebar() {
           <button
             type="button"
             onClick={toggleSidebar}
+            aria-label="Close navigation sidebar"
             className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-white lg:hidden"
           >
             <X className="h-4.5 w-4.5" />
@@ -77,7 +78,7 @@ export const Sidebar = memo(function Sidebar() {
         </div>
 
         {/* ── Navigation Stream ── */}
-        <nav className="flex-1 overflow-y-auto no-scrollbar py-3">
+        <nav className="flex-1 overflow-y-auto no-scrollbar py-3" aria-label="Main navigation">
           <ul className="space-y-1 px-2">
             {NAV_ITEMS.map((item) => {
               const isImplemented = IMPLEMENTED_MODULES.has(item.module);
@@ -88,6 +89,7 @@ export const Sidebar = memo(function Sidebar() {
                 <li key={item.id} className="relative group">
                   <NavLink
                     to={item.path}
+                    aria-label={item.label}
                     className={cn(
                       'flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold transition-all duration-150',
                       isActive

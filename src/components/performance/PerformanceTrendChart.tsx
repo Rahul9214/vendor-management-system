@@ -25,7 +25,7 @@ export const PerformanceTrendChart = memo(function PerformanceTrendChart({
       title="Performance Trend Analysis Graph"
       description="Historical Quality Score %, Delivery Score %, and SLA Compliance over time vs 95% target"
     >
-      <ResponsiveContainer width="100%" height={320}>
+      <ResponsiveContainer width="100%" height={320} debounce={50}>
         <LineChart data={trends} margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
           <XAxis

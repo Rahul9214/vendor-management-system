@@ -119,6 +119,7 @@ export const Header = memo(function Header() {
         <button
           type="button"
           onClick={toggleSidebar}
+          aria-label="Open navigation menu"
           className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-100 lg:hidden"
           title="Toggle sidebar"
         >

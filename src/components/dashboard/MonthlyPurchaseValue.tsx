@@ -73,7 +73,7 @@ export const MonthlyPurchaseValue = memo(function MonthlyPurchaseValue() {
       title="Monthly Purchase Value"
       description="Actual spend vs. budget over the last 12 months (USD)"
     >
-      <ResponsiveContainer width="100%" height={280}>
+      <ResponsiveContainer width="100%" height={280} debounce={50}>
         <BarChart data={chartData} margin={{ top: 5, right: 10, left: -5, bottom: 5 }} barGap={4}>
           <defs>
             <linearGradient id="valueGrad" x1="0" y1="0" x2="0" y2="1">

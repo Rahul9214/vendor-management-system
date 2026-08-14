@@ -87,7 +87,7 @@ export const RatingDistribution = memo(function RatingDistribution() {
       title="Vendor Rating Distribution"
       description="Star-rating breakdown across all active vendors"
     >
-      <ResponsiveContainer width="100%" height={220}>
+      <ResponsiveContainer width="100%" height={220} debounce={50}>
         <BarChart
           data={chartData}
           layout="vertical"

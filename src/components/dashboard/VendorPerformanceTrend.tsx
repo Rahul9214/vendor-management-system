@@ -75,7 +75,7 @@ export const VendorPerformanceTrend = memo(function VendorPerformanceTrend() {
       title="Vendor Performance Trend"
       description="Monthly performance score vs. target and prior year (0–100 scale)"
     >
-      <ResponsiveContainer width="100%" height={280}>
+      <ResponsiveContainer width="100%" height={280} debounce={50}>
         <LineChart data={chartData} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
           <defs>
             <linearGradient id="scoreGrad" x1="0" y1="0" x2="0" y2="1">
