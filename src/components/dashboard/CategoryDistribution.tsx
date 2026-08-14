@@ -5,7 +5,6 @@ import {
   Pie,
   Cell,
   Tooltip,
-  Legend,
 } from 'recharts';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { ErrorState } from '@/components/shared/ErrorState';
@@ -30,46 +29,23 @@ function CustomTooltip({ active, payload }: CustomTooltipProps) {
   if (!active || !payload?.length) return null;
   const item = payload[0].payload;
   return (
-    <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-xl dark:border-slate-700 dark:bg-slate-900">
-      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">
-        {item.category}
-      </p>
-      <p className="mt-1 text-xs text-slate-500">
-        {item.count.toLocaleString()} vendors · {item.percentage}%
+    <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-xl dark:border-slate-700 dark:bg-slate-900 z-50">
+      <div className="flex items-center gap-2">
+        <span
+          className="h-2.5 w-2.5 rounded-full flex-shrink-0"
+          style={{ backgroundColor: item.color }}
+        />
+        <p className="text-xs font-bold text-slate-900 dark:text-slate-100">
+          {item.category}
+        </p>
+      </div>
+      <p className="mt-1.5 text-xs font-medium text-slate-600 dark:text-slate-300">
+        <span className="font-bold text-slate-900 dark:text-white">
+          {item.count.toLocaleString()}
+        </span>{' '}
+        vendors ({item.percentage}%)
       </p>
     </div>
-  );
-}
-
-// ─── Custom Legend ────────────────────────────────────────────────────────────
-
-interface LegendPayloadEntry {
-  value: string;
-  color: string;
-  payload: CategoryData;
-}
-
-interface CustomLegendProps {
-  payload?: LegendPayloadEntry[];
-}
-
-function CustomLegend({ payload }: CustomLegendProps) {
-  if (!payload?.length) return null;
-  return (
-    <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5">
-      {payload.map((entry) => (
-        <li key={entry.value} className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300">
-          <span
-            className="inline-block h-2 w-2 flex-shrink-0 rounded-full"
-            style={{ backgroundColor: entry.color }}
-          />
-          <span className="truncate">{entry.value}</span>
-          <span className="ml-auto font-semibold text-slate-800 dark:text-slate-200">
-            {entry.payload.percentage}%
-          </span>
-        </li>
-      ))}
-    </ul>
   );
 }
 
@@ -98,27 +74,61 @@ export const CategoryDistribution = memo(function CategoryDistribution() {
       title="Category Distribution"
       description={`${totalVendors.toLocaleString()} vendors across ${chartData.length} categories`}
     >
-      <ResponsiveContainer width="100%" height={220} debounce={50}>
-        <PieChart>
-          <Pie
-            data={chartData}
-            dataKey="count"
-            nameKey="category"
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={90}
-            paddingAngle={2}
-            strokeWidth={0}
-          >
-            {chartData.map((entry) => (
-              <Cell key={entry.category} fill={entry.color} />
+      <div className="flex flex-col h-full justify-between space-y-3">
+        {/* Dedicated Pie Chart Container (Zero DOM Overlap) */}
+        <div className="h-44 w-full">
+          <ResponsiveContainer width="100%" height="100%" debounce={50}>
+            <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+              <Pie
+                data={chartData}
+                dataKey="count"
+                nameKey="category"
+                cx="50%"
+                cy="50%"
+                innerRadius={48}
+                outerRadius={72}
+                paddingAngle={3}
+                strokeWidth={0}
+                isAnimationActive={false}
+              >
+                {chartData.map((entry) => (
+                  <Cell
+                    key={entry.category}
+                    fill={entry.color}
+                    className="transition-all duration-200 hover:opacity-80 cursor-pointer"
+                  />
+                ))}
+              </Pie>
+              <Tooltip content={<CustomTooltip />} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Clean Categorized Legend Grid Below Chart */}
+        <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80">
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+            {chartData.map((item) => (
+              <li
+                key={item.category}
+                className="flex items-center justify-between gap-1.5 text-xs rounded-lg px-1.5 py-1 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50"
+              >
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span
+                    className="h-2 w-2 flex-shrink-0 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <span className="truncate text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    {item.category}
+                  </span>
+                </div>
+                <span className="font-bold text-slate-900 dark:text-slate-100 text-xs">
+                  {item.percentage}%
+                </span>
+              </li>
             ))}
-          </Pie>
-          <Tooltip content={<CustomTooltip />} />
-          <Legend content={<CustomLegend />} />
-        </PieChart>
-      </ResponsiveContainer>
+          </ul>
+        </div>
+      </div>
     </ChartCard>
   );
 });
