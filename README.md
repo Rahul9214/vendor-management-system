@@ -1,4 +1,5 @@
 # 🏢 Enterprise Vendor Management System (VMS)
+<!-- Last Updated: August 14, 2026 -->
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel%20Production-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://vendor-management-system-indol.vercel.app/dashboard)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Rahul9214/vendor-management-system)
