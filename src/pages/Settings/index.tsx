@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
-  Monitor,
-  Laptop,
-  Tablet,
-  Smartphone,
+  Sliders,
   Moon,
   Sun,
   Bell,
-  Globe,
-  Sliders,
   CheckCircle2,
-  Download,
+  Save,
+  Building2,
+  DollarSign,
+  Clock,
+  ShieldCheck,
+  User,
 } from 'lucide-react';
 import { useTheme, useToggleTheme } from '@/hooks/useUIStore';
 import { Button } from '@/components/ui/button';
@@ -19,50 +19,30 @@ export default function SettingsPage() {
   const theme = useTheme();
   const toggleTheme = useToggleTheme();
 
-  const [windowSize, setWindowSize] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 1280,
-    height: typeof window !== 'undefined' ? window.innerHeight : 800,
-    pixelRatio: typeof window !== 'undefined' ? window.devicePixelRatio : 1,
-  });
+  // Procurement System Preferences
+  const [baseCurrency, setBaseCurrency] = useState('USD');
+  const [defaultPaymentTerms, setDefaultPaymentTerms] = useState('Net 30');
+  const [autoApprovalThreshold, setAutoApprovalThreshold] = useState('10000');
 
-  const [notificationsEnabled, setNotificationsEnabled] = useState({
-    email: true,
-    browserPush: true,
-    inApp: true,
+  // VMS Notification Preferences
+  const [notifications, setNotifications] = useState({
+    approvalPending: true,
+    documentExpiring: true,
+    lowRatingAlert: true,
+    delayedDelivery: true,
+    paymentDue: false,
   });
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-        pixelRatio: window.devicePixelRatio,
-      });
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const getDeviceCategory = (width: number) => {
-    if (width >= 1280) return { label: 'Desktop (4K / Widescreen)', icon: Monitor, color: 'text-indigo-600 dark:text-indigo-400' };
-    if (width >= 1024) return { label: 'Laptop / Netbook', icon: Laptop, color: 'text-emerald-600 dark:text-emerald-400' };
-    if (width >= 768) return { label: 'Tablet (iPad / Surface)', icon: Tablet, color: 'text-amber-600 dark:text-amber-400' };
-    return { label: 'Mobile Smartphone', icon: Smartphone, color: 'text-purple-600 dark:text-purple-400' };
-  };
-
-  const currentDevice = getDeviceCategory(windowSize.width);
-  const DeviceIcon = currentDevice.icon;
-
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
+  const handleSave = () => {
+    setToastMessage('Vendor Management preferences saved successfully!');
     setTimeout(() => setToastMessage(null), 3000);
   };
 
   return (
     <div className="mx-auto max-w-screen-xl space-y-6">
-      {/* Page Hero Header */}
+      {/* Page Header */}
       <div className="flex flex-col gap-2 border-b border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
@@ -70,115 +50,116 @@ export default function SettingsPage() {
           </div>
           <div>
             <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-2xl">
-              System Settings & Responsive Experience
+              System Settings & Preferences
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Verify device viewport responsiveness across Desktop, Laptop, Tablet, and Mobile screens. Configure themes and preferences.
+              Configure procurement defaults, theme preferences, and vendor governance notifications.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Responsive Device Viewport Live Inspector */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-5">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
-          <div className="flex items-center gap-2">
-            <DeviceIcon className={`h-5 w-5 ${currentDevice.color}`} />
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
-              Active Viewport Diagnostics
+      {/* User & Organization Context Card */}
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3.5">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-700 font-bold dark:bg-slate-800 dark:text-slate-200">
+              <User className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                  Rahul Ranjan
+                </h3>
+                <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-700 dark:bg-indigo-950/80 dark:text-indigo-300">
+                  Senior Procurement Lead
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                Enterprise Supply Chain & Vendor Governance · <span className="font-semibold text-slate-700 dark:text-slate-300">FieldNerve Intelligence</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-200/60 dark:border-emerald-800/60 self-start sm:self-auto">
+            <ShieldCheck className="h-4 w-4" />
+            <span>Procurement Admin Verified</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Procurement Defaults Card */}
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
+          <div className="border-b border-slate-100 pb-3 dark:border-slate-800">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <Building2 className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+              Procurement & Financial Defaults
             </h3>
+            <p className="text-xs text-slate-400 mt-0.5">Default settings for POs and vendor contracts</p>
           </div>
-          <span className="rounded-full bg-slate-100 px-3 py-1 font-mono text-xs font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-            {windowSize.width}px × {windowSize.height}px
-          </span>
-        </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4 dark:border-slate-800 dark:bg-slate-800/40">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
-              <Monitor className="h-4 w-4" />
-              <span>Device Category</span>
+          <div className="space-y-4 text-xs">
+            {/* Base Currency */}
+            <div>
+              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
+                <DollarSign className="h-3.5 w-3.5 text-slate-400" /> Default Base Currency
+              </label>
+              <select
+                value={baseCurrency}
+                onChange={(e) => setBaseCurrency(e.target.value)}
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 shadow-xs focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              >
+                <option value="USD">USD ($) - US Dollar (Default)</option>
+                <option value="INR">INR (₹) - Indian Rupee</option>
+                <option value="EUR">EUR (€) - Euro</option>
+                <option value="GBP">GBP (£) - British Pound</option>
+              </select>
             </div>
-            <p className="text-sm font-bold text-slate-900 dark:text-slate-100">
-              {currentDevice.label}
-            </p>
-          </div>
 
-          <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4 dark:border-slate-800 dark:bg-slate-800/40">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
-              <Globe className="h-4 w-4" />
-              <span>Display Scale DPR</span>
+            {/* Payment Terms */}
+            <div>
+              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5 text-slate-400" /> Standard Payment Terms
+              </label>
+              <select
+                value={defaultPaymentTerms}
+                onChange={(e) => setDefaultPaymentTerms(e.target.value)}
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 shadow-xs focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              >
+                <option value="Net 30">Net 30 Days (Standard Enterprise)</option>
+                <option value="Net 60">Net 60 Days (Extended Term)</option>
+                <option value="Net 15">Net 15 Days (Accelerated)</option>
+                <option value="Immediate">Immediate / Due on Receipt</option>
+              </select>
             </div>
-            <p className="text-sm font-bold text-slate-900 dark:text-slate-100">
-              {windowSize.pixelRatio}x Retina DPR
-            </p>
-          </div>
 
-          <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4 dark:border-slate-800 dark:bg-slate-800/40">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
-              <Sliders className="h-4 w-4" />
-              <span>Layout Grid Mode</span>
+            {/* Auto Approval Threshold */}
+            <div>
+              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-slate-400" /> Level 1 Auto-Approval Cap ($)
+              </label>
+              <input
+                type="number"
+                value={autoApprovalThreshold}
+                onChange={(e) => setAutoApprovalThreshold(e.target.value)}
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 shadow-xs focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              />
+              <p className="text-[10px] text-slate-400 mt-1">
+                Purchase orders below this value auto-route to Level 1 Manager approval.
+              </p>
             </div>
-            <p className="text-sm font-bold text-slate-900 dark:text-slate-100">
-              {windowSize.width < 640
-                ? 'Mobile 1-Col Stack'
-                : windowSize.width < 1024
-                ? 'Tablet 2-Col Grid'
-                : 'Desktop Multi-Pane Grid'}
-            </p>
           </div>
+        </section>
 
-          <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4 dark:border-slate-800 dark:bg-slate-800/40">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
-              <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-              <span>Responsive Compliance</span>
-            </div>
-            <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
-              100% Fluid & Adaptive
-            </p>
-          </div>
-        </div>
-
-        {/* Viewport Test Breakpoint Buttons */}
-        <div className="border-t border-slate-100 pt-4 dark:border-slate-800 space-y-2">
-          <p className="text-xs font-semibold text-slate-500">
-            Tested Breakpoints & Screen Targets:
-          </p>
-          <div className="flex flex-wrap items-center gap-2">
-            {[
-              { label: 'Desktop (1440px+)', icon: Monitor, desc: 'Sidebar expanded, 3-4 col cards' },
-              { label: 'Laptop (1024px)', icon: Laptop, desc: 'Collapsible sidebar, 2-3 col cards' },
-              { label: 'Tablet (768px)', icon: Tablet, desc: 'Drawer sidebar overlay, 2 col cards' },
-              { label: 'Mobile (375px)', icon: Smartphone, desc: '1-col full width stacked' },
-            ].map((bp) => {
-              const Icon = bp.icon;
-              return (
-                <div
-                  key={bp.label}
-                  className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
-                >
-                  <Icon className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-                  <div>
-                    <p className="font-bold">{bp.label}</p>
-                    <p className="text-[10px] text-slate-400">{bp.desc}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Theme & Display Preferences */}
-      <section className="grid gap-6 md:grid-cols-2">
-        {/* Appearance Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
+        {/* Appearance & Theme Card */}
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
           <div className="border-b border-slate-100 pb-3 dark:border-slate-800">
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
               {theme === 'dark' ? <Moon className="h-4 w-4 text-indigo-400" /> : <Sun className="h-4 w-4 text-amber-500" />}
-              Appearance & Dark Mode
+              Interface Theme & Appearance
             </h3>
-            <p className="text-xs text-slate-400 mt-0.5">Customize application UI theme theme</p>
+            <p className="text-xs text-slate-400 mt-0.5">Customize your portal display theme</p>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -193,7 +174,7 @@ export default function SettingsPage() {
                   : 'border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800 text-slate-600'
               }`}
             >
-              <Sun className="h-5 w-5 text-amber-500" />
+              <Sun className="h-5 w-5 text-amber-500 flex-shrink-0" />
               <div className="text-left">
                 <p className="text-xs font-bold">Light Mode</p>
                 <p className="text-[10px] text-slate-400">Clean white UI</p>
@@ -211,97 +192,106 @@ export default function SettingsPage() {
                   : 'border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800 text-slate-600'
               }`}
             >
-              <Moon className="h-5 w-5 text-indigo-400" />
+              <Moon className="h-5 w-5 text-indigo-400 flex-shrink-0" />
               <div className="text-left">
                 <p className="text-xs font-bold">Dark Mode</p>
                 <p className="text-[10px] text-slate-400">Sleek dark UI</p>
               </div>
             </button>
           </div>
+        </section>
+      </div>
+
+      {/* VMS Alert & Notification Subscriptions */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
+        <div className="border-b border-slate-100 pb-3 dark:border-slate-800">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <Bell className="h-4 w-4 text-indigo-500" />
+            Vendor Alert & Notification Preferences
+          </h3>
+          <p className="text-xs text-slate-400 mt-0.5">Select which procurement alerts trigger navbar bell notifications</p>
         </div>
 
-        {/* Notifications Preference Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-4">
-          <div className="border-b border-slate-100 pb-3 dark:border-slate-800">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <Bell className="h-4 w-4 text-indigo-500" />
-              Notification Subscriptions
-            </h3>
-            <p className="text-xs text-slate-400 mt-0.5">Toggle alert channels</p>
-          </div>
+        <div className="grid gap-3 sm:grid-cols-2 text-xs">
+          <label className="flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 bg-slate-50/60 p-3.5 dark:border-slate-800 dark:bg-slate-800/40">
+            <div>
+              <p className="font-bold text-slate-800 dark:text-slate-200">Vendor Approval Pending</p>
+              <p className="text-[10px] text-slate-400">Alert when onboarding candidate awaits screening</p>
+            </div>
+            <input
+              type="checkbox"
+              checked={notifications.approvalPending}
+              onChange={(e) =>
+                setNotifications({ ...notifications, approvalPending: e.target.checked })
+              }
+              className="h-4 w-4 rounded accent-indigo-600"
+            />
+          </label>
 
-          <div className="space-y-3 text-xs">
-            <label className="flex items-center justify-between cursor-pointer rounded-xl bg-slate-50 p-3 dark:bg-slate-800/50">
-              <span className="font-semibold text-slate-700 dark:text-slate-300">
-                In-App Navbar Bell Notifications
-              </span>
-              <input
-                type="checkbox"
-                checked={notificationsEnabled.inApp}
-                onChange={(e) =>
-                  setNotificationsEnabled({
-                    ...notificationsEnabled,
-                    inApp: e.target.checked,
-                  })
-                }
-                className="h-4 w-4 rounded accent-indigo-600"
-              />
-            </label>
+          <label className="flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 bg-slate-50/60 p-3.5 dark:border-slate-800 dark:bg-slate-800/40">
+            <div>
+              <p className="font-bold text-slate-800 dark:text-slate-200">Document Expiry Warnings</p>
+              <p className="text-[10px] text-slate-400">Warn 30 days prior to GST / ISO / NDA expiration</p>
+            </div>
+            <input
+              type="checkbox"
+              checked={notifications.documentExpiring}
+              onChange={(e) =>
+                setNotifications({ ...notifications, documentExpiring: e.target.checked })
+              }
+              className="h-4 w-4 rounded accent-indigo-600"
+            />
+          </label>
 
-            <label className="flex items-center justify-between cursor-pointer rounded-xl bg-slate-50 p-3 dark:bg-slate-800/50">
-              <span className="font-semibold text-slate-700 dark:text-slate-300">
-                Browser Push Notifications
-              </span>
-              <input
-                type="checkbox"
-                checked={notificationsEnabled.browserPush}
-                onChange={(e) =>
-                  setNotificationsEnabled({
-                    ...notificationsEnabled,
-                    browserPush: e.target.checked,
-                  })
-                }
-                className="h-4 w-4 rounded accent-indigo-600"
-              />
-            </label>
+          <label className="flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 bg-slate-50/60 p-3.5 dark:border-slate-800 dark:bg-slate-800/40">
+            <div>
+              <p className="font-bold text-slate-800 dark:text-slate-200">Low Rating & Quality Defect Alerts</p>
+              <p className="text-[10px] text-slate-400">Notify if vendor score drops below 3.5 stars</p>
+            </div>
+            <input
+              type="checkbox"
+              checked={notifications.lowRatingAlert}
+              onChange={(e) =>
+                setNotifications({ ...notifications, lowRatingAlert: e.target.checked })
+              }
+              className="h-4 w-4 rounded accent-indigo-600"
+            />
+          </label>
 
-            <label className="flex items-center justify-between cursor-pointer rounded-xl bg-slate-50 p-3 dark:bg-slate-800/50">
-              <span className="font-semibold text-slate-700 dark:text-slate-300">
-                Email Executive Digest
-              </span>
-              <input
-                type="checkbox"
-                checked={notificationsEnabled.email}
-                onChange={(e) =>
-                  setNotificationsEnabled({
-                    ...notificationsEnabled,
-                    email: e.target.checked,
-                  })
-                }
-                className="h-4 w-4 rounded accent-indigo-600"
-              />
-            </label>
-          </div>
+          <label className="flex items-center justify-between cursor-pointer rounded-xl border border-slate-100 bg-slate-50/60 p-3.5 dark:border-slate-800 dark:bg-slate-800/40">
+            <div>
+              <p className="font-bold text-slate-800 dark:text-slate-200">Delayed Delivery & SLA Breaches</p>
+              <p className="text-[10px] text-slate-400">Alert on late PO delivery fulfillment</p>
+            </div>
+            <input
+              type="checkbox"
+              checked={notifications.delayedDelivery}
+              onChange={(e) =>
+                setNotifications({ ...notifications, delayedDelivery: e.target.checked })
+              }
+              className="h-4 w-4 rounded accent-indigo-600"
+            />
+          </label>
         </div>
       </section>
 
-      {/* Export System Settings Button */}
-      <div className="flex items-center justify-end gap-3 pt-4">
+      {/* Save Button */}
+      <div className="flex items-center justify-end gap-3 pt-2">
         <Button
           size="sm"
-          onClick={() => showToast('System preferences saved successfully!')}
-          className="gap-2 bg-indigo-600 text-white hover:bg-indigo-700 text-xs"
+          onClick={handleSave}
+          className="gap-2 bg-indigo-600 text-white hover:bg-indigo-700 text-xs px-5 py-2.5 rounded-xl font-bold shadow-md shadow-indigo-500/20"
         >
-          <Download className="h-4 w-4" />
-          Save System Preferences
+          <Save className="h-4 w-4" />
+          Save Preferences
         </Button>
       </div>
 
-      {/* Toast */}
+      {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-900 p-4 text-white shadow-2xl animate-in slide-in-from-bottom-5">
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-900 px-4 py-3 text-white shadow-2xl animate-in slide-in-from-bottom-5">
           <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-          <p className="text-xs font-medium">{toastMessage}</p>
+          <p className="text-xs font-semibold">{toastMessage}</p>
         </div>
       )}
     </div>
