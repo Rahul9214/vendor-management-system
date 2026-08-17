@@ -86,6 +86,7 @@ export const VendorTable = memo(function VendorTable({
         header: ({ table }) => (
           <input
             type="checkbox"
+            aria-label="Select all vendors on current page"
             checked={table.getIsAllPageRowsSelected()}
             onChange={table.getToggleAllPageRowsSelectedHandler()}
             className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-900"
@@ -94,6 +95,7 @@ export const VendorTable = memo(function VendorTable({
         cell: ({ row }) => (
           <input
             type="checkbox"
+            aria-label={`Select vendor ${row.original.name}`}
             checked={row.getIsSelected()}
             onChange={row.getToggleSelectedHandler()}
             onClick={(e) => e.stopPropagation()}
@@ -125,6 +127,8 @@ export const VendorTable = memo(function VendorTable({
                       href={v.website}
                       target="_blank"
                       rel="noreferrer"
+                      aria-label={`Visit ${v.name} official website`}
+                      title={`Visit ${v.name} official website`}
                       onClick={(e) => e.stopPropagation()}
                       className="text-slate-400 hover:text-indigo-500"
                     >
@@ -296,6 +300,8 @@ export const VendorTable = memo(function VendorTable({
         <div className="relative flex-1 max-w-md">
           <input
             type="text"
+            id="vendor-search-input"
+            aria-label="Search vendors by name, code, contact person, or city"
             placeholder="Search vendor name, code, contact, city..."
             value={filters.search || ''}
             onChange={(e) =>
@@ -307,6 +313,7 @@ export const VendorTable = memo(function VendorTable({
           {filters.search && (
             <button
               type="button"
+              aria-label="Clear vendor search text"
               onClick={() => onFilterChange({ ...filters, search: '', page: 1 })}
               className="absolute right-2.5 top-2.5 text-xs text-slate-400 hover:text-slate-600"
             >
